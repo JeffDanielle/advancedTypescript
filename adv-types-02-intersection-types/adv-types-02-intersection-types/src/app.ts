@@ -104,3 +104,11 @@ function moveAnimal(animal: Animal) {
 }
 
 moveAnimal({type: "bird", flyingSpeed: 10});
+
+// Type casting
+// const userInputElement = <HTMLInputElement>document.querySelector("user-input")!;
+const userInputElement = document.getElementById(
+    "user-input"
+)! as HTMLInputElement;
+
+userInputElement.value = "Hi there!";
