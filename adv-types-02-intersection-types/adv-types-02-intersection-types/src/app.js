@@ -19,6 +19,10 @@ var fetchUserData = {
 };
 // Optional chaining, used when we don't know if the property exists or not
 console.log((_a = fetchUserData === null || fetchUserData === void 0 ? void 0 : fetchUserData.job) === null || _a === void 0 ? void 0 : _a.title);
+var userInput = "";
+// Nullish coalescing operator most commonly used with nullish or undefined values
+var storedData = userInput !== null && userInput !== void 0 ? userInput : "DEFAULT";
+console.log(storedData);
 // type UnknownEmployee = Employee | Admin;
 // function printEmployeeInformation(emp: UnknownEmployee) {
 //     console.log("Name: " + emp.name);

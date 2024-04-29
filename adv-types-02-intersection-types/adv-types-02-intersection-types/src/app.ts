@@ -45,6 +45,13 @@ const fetchUserData = {
 // Optional chaining, used when we don't know if the property exists or not
 console.log(fetchUserData?.job?.title);
 
+const userInput = "";
+
+// Nullish coalescing operator most commonly used with nullish or undefined values
+const storedData = userInput ?? "DEFAULT";
+
+console.log(storedData);
+
 // type UnknownEmployee = Employee | Admin;
 
 // function printEmployeeInformation(emp: UnknownEmployee) {
