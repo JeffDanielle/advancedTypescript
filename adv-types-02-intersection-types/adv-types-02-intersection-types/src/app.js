@@ -1,3 +1,4 @@
+var _a;
 var e1 = {
     name: "Max",
     privileges: ["create-server"],
@@ -11,6 +12,13 @@ function add(a, b) {
 }
 var result = add("Jeff", "Bayot");
 result.split(" ");
+var fetchUserData = {
+    id: "u1",
+    name: "Jeff",
+    job: { title: "CEO", description: "My own company" },
+};
+// Optional chaining, used when we don't know if the property exists or not
+console.log((_a = fetchUserData === null || fetchUserData === void 0 ? void 0 : fetchUserData.job) === null || _a === void 0 ? void 0 : _a.title);
 // type UnknownEmployee = Employee | Admin;
 // function printEmployeeInformation(emp: UnknownEmployee) {
 //     console.log("Name: " + emp.name);

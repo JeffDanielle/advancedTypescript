@@ -36,6 +36,15 @@ function add(a: Combinable, b: Combinable) {
 const result = add("Jeff", "Bayot");
 result.split(" ");
 
+const fetchUserData = {
+    id: "u1",
+    name: "Jeff",
+    job: {title: "CEO", description: "My own company"},
+};
+
+// Optional chaining, used when we don't know if the property exists or not
+console.log(fetchUserData?.job?.title);
+
 // type UnknownEmployee = Employee | Admin;
 
 // function printEmployeeInformation(emp: UnknownEmployee) {
