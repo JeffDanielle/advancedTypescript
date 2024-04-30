@@ -68,9 +68,14 @@ textStorage.addItem("Jeff");
 textStorage.removeItem("Marlon");
 console.log(textStorage.getItems());
 var numberStorage = new DataStorage();
-// const objStorage = new DataStorage<object>();
-// const maxObj = {name: "Marlon"};
-// objStorage.addItem({name: "Marlon"});
-// objStorage.addItem({name: "Jeff"});
-// objStorage.removeItem(maxObj);
-// console.log(objStorage.getItems());
+function createCourseGoal(title, description, date) {
+    // return {title, description, completeUntil: date};
+    // Partial turns the CourseGoal into a type with all properties optional
+    var courseGoal = {};
+    courseGoal.title = title;
+    courseGoal.description = description;
+    courseGoal.completeUntil = date;
+    return courseGoal;
+}
+var names = ["Jeff", "Danielle"];
+// names.push("Marlon");
