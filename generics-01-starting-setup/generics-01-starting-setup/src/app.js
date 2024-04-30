@@ -1,6 +1,15 @@
 // Generics, a type connected to another type: example below
 // Array of string
 // const names: Array<string> = [];
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 // // names[0].split(" ");
 // // Promise expected to resolve with a number
 // const promise = new Promise<number>((resolve, reject) => {
@@ -34,3 +43,34 @@ function extractAndConvert(obj, key) {
     return "Value: " + obj[key];
 }
 extractAndConvert({ name: "Jeff" }, "name");
+// generic not only specify a type, but also can be use as type safety
+var DataStorage = /** @class */ (function () {
+    function DataStorage() {
+        this.data = [];
+    }
+    DataStorage.prototype.addItem = function (item) {
+        this.data.push(item);
+    };
+    DataStorage.prototype.removeItem = function (item) {
+        if (this.data.indexOf(item) === -1) {
+            return;
+        }
+        this.data.splice(this.data.indexOf(item), 1);
+    };
+    DataStorage.prototype.getItems = function () {
+        return __spreadArray([], this.data, true);
+    };
+    return DataStorage;
+}());
+var textStorage = new DataStorage();
+textStorage.addItem("Marlon");
+textStorage.addItem("Jeff");
+textStorage.removeItem("Marlon");
+console.log(textStorage.getItems());
+var numberStorage = new DataStorage();
+// const objStorage = new DataStorage<object>();
+// const maxObj = {name: "Marlon"};
+// objStorage.addItem({name: "Marlon"});
+// objStorage.addItem({name: "Jeff"});
+// objStorage.removeItem(maxObj);
+// console.log(objStorage.getItems());
