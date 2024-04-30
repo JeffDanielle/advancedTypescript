@@ -22,3 +22,20 @@ function merge<T extends object, U extends object>(objA: T, objB: U) {
 
 const mergedObj = merge({name: "Jeff", hobbies: ["Sports"]}, {age: 24});
 console.log(mergedObj.age);
+
+interface Lengthy {
+    length: number;
+}
+
+// generic type parameter. It allows you to create reusable components that can work with different types.
+function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
+    let descriptionText = "Got no value.";
+    if (element.length === 1) {
+        descriptionText = "Got 1 elements";
+    } else if (element.length > 1) {
+        descriptionText = "Got " + element.length + " elements.";
+    }
+    return [element, descriptionText];
+}
+
+console.log(countAndDescribe(["Sports", "Cooking"]));

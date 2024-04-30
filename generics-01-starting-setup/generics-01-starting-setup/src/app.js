@@ -17,3 +17,15 @@ function merge(objA, objB) {
 }
 var mergedObj = merge({ name: "Jeff", hobbies: ["Sports"] }, { age: 24 });
 console.log(mergedObj.age);
+// generic type parameter. It allows you to create reusable components that can work with different types.
+function countAndDescribe(element) {
+    var descriptionText = "Got no value.";
+    if (element.length === 1) {
+        descriptionText = "Got 1 elements";
+    }
+    else if (element.length > 1) {
+        descriptionText = "Got " + element.length + " elements.";
+    }
+    return [element, descriptionText];
+}
+console.log(countAndDescribe(["Sports", "Cooking"]));
