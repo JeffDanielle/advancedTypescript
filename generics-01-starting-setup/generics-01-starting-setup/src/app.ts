@@ -14,3 +14,12 @@
 // promise.then((data) => {
 //     // data.split(" ");
 // });
+
+// different way of doing generics, concrete Types
+function merge<T, U>(objA: T, objB: U) {
+    return Object.assign(objA, objB);
+}
+
+const mergedObj = merge({name: "Jeff", hobbies: ["Sports"]}, {age: 24});
+
+console.log(mergedObj.age);
