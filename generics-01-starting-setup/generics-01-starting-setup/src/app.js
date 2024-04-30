@@ -46,6 +46,11 @@ extractAndConvert({ name: "Jeff" }, "name");
 // generic not only specify a type, but also can be use as type safety
 var DataStorage = /** @class */ (function () {
     function DataStorage() {
+        /* Difference between Union Types and Generics:
+        Union types accepts any type of Object e.g string[] | number[] | boolean[] while Generics only accepts concrete type e.g string if
+        it already accept string type of data it will only accept string
+        More like generic type lock in a type
+        */
         this.data = [];
     }
     DataStorage.prototype.addItem = function (item) {
