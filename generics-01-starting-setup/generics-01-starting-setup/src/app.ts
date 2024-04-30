@@ -39,3 +39,13 @@ function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
 }
 
 console.log(countAndDescribe(["Sports", "Cooking"]));
+
+// Allows any type of Object with key of type U from T
+function extractAndConvert<T extends object, U extends keyof T>(
+    obj: T,
+    key: U
+) {
+    return "Value: " + obj[key];
+}
+
+extractAndConvert({name: "Jeff"}, "name");

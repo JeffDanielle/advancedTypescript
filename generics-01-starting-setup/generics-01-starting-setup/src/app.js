@@ -29,3 +29,8 @@ function countAndDescribe(element) {
     return [element, descriptionText];
 }
 console.log(countAndDescribe(["Sports", "Cooking"]));
+// Allows any type of Object with key of type U from T
+function extractAndConvert(obj, key) {
+    return "Value: " + obj[key];
+}
+extractAndConvert({ name: "Jeff" }, "name");
