@@ -38,6 +38,7 @@ var __setFunctionName = (this && this.__setFunctionName) || function (f, name, p
 };
 // Decorator
 function Logger(logString) {
+    console.log("LOGGER FACTORY");
     return function (constructor) {
         // Factory decorator
         console.log(logString);
@@ -45,6 +46,7 @@ function Logger(logString) {
     };
 }
 function WithTemplate(template, hookId) {
+    console.log("TEMPLATE FACTORY");
     return function (constructor) {
         var hookEl = document.getElementById(hookId);
         var p = new constructor();
@@ -55,9 +57,9 @@ function WithTemplate(template, hookId) {
     };
 }
 // Decorators execute when a class is defined
-// @Logger("Logging - Person")
+// Execute bottom-most decorator(inside return function) first
 var Person = function () {
-    var _classDecorators = [WithTemplate("<h1>My Person Object</h1>", "app")];
+    var _classDecorators = [Logger("LOGGING"), WithTemplate("<h1>My Person Object</h1>", "app")];
     var _classDescriptor;
     var _classExtraInitializers = [];
     var _classThis;
