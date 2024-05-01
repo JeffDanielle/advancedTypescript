@@ -39,19 +39,31 @@ var __setFunctionName = (this && this.__setFunctionName) || function (f, name, p
 // Decorator
 function Logger(logString) {
     return function (constructor) {
+        // Factory decorator
         console.log(logString);
         console.log(constructor);
     };
 }
+function WithTemplate(template, hookId) {
+    return function (constructor) {
+        var hookEl = document.getElementById(hookId);
+        var p = new constructor();
+        if (hookEl) {
+            hookEl.innerHTML = template;
+            hookEl.querySelector("h1").textContent = p.name;
+        }
+    };
+}
 // Decorators execute when a class is defined
+// @Logger("Logging - Person")
 var Person = function () {
-    var _classDecorators = [Logger("Logging - Person")];
+    var _classDecorators = [WithTemplate("<h1>My Person Object</h1>", "app")];
     var _classDescriptor;
     var _classExtraInitializers = [];
     var _classThis;
     var Person = _classThis = /** @class */ (function () {
         function Person_1() {
-            this.name = "Max";
+            this.name = "Jeff";
             console.log("Person was created");
         }
         return Person_1;
