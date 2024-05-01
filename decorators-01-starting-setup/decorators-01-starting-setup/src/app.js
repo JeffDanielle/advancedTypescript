@@ -87,14 +87,35 @@ function Log(target, propertyName) {
     console.log("Property decorator!");
     console.log(target, propertyName);
 }
+function Log2(target, name, descriptor) {
+    console.log("Accessor decorator!");
+    console.log(target);
+    console.log(name);
+    console.log(descriptor);
+}
+function Log3(target, name, descriptor) {
+    console.log("Method decorator!");
+    console.log(target);
+    console.log(name);
+    console.log(descriptor);
+}
+function Log4(target, name, position) {
+    console.log("Parameter decorator!");
+    console.log(target);
+    console.log(name);
+    console.log(position);
+}
 var Product = function () {
     var _a;
+    var _instanceExtraInitializers = [];
     var _title_decorators;
     var _title_initializers = [];
     var _title_extraInitializers = [];
+    var _set_price_decorators;
+    var _getPriceWithTax_decorators;
     return _a = /** @class */ (function () {
             function Product(t, p) {
-                this.title = __runInitializers(this, _title_initializers, void 0);
+                this.title = (__runInitializers(this, _instanceExtraInitializers), __runInitializers(this, _title_initializers, void 0));
                 this._price = __runInitializers(this, _title_extraInitializers);
                 this.title = t;
                 this._price = p;
@@ -119,6 +140,10 @@ var Product = function () {
         (function () {
             var _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
             _title_decorators = [Log];
+            _set_price_decorators = [Log2];
+            _getPriceWithTax_decorators = [Log3];
+            __esDecorate(_a, null, _set_price_decorators, { kind: "setter", name: "price", static: false, private: false, access: { has: function (obj) { return "price" in obj; }, set: function (obj, value) { obj.price = value; } }, metadata: _metadata }, null, _instanceExtraInitializers);
+            __esDecorate(_a, null, _getPriceWithTax_decorators, { kind: "method", name: "getPriceWithTax", static: false, private: false, access: { has: function (obj) { return "getPriceWithTax" in obj; }, get: function (obj) { return obj.getPriceWithTax; } }, metadata: _metadata }, null, _instanceExtraInitializers);
             __esDecorate(null, null, _title_decorators, { kind: "field", name: "title", static: false, private: false, access: { has: function (obj) { return "title" in obj; }, get: function (obj) { return obj.title; }, set: function (obj, value) { obj.title = value; } }, metadata: _metadata }, _title_initializers, _title_extraInitializers);
             if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
         })(),
