@@ -82,3 +82,45 @@ var Person = function () {
 }();
 var pers = new Person();
 console.log(pers);
+// ---
+function Log(target, propertyName) {
+    console.log("Property decorator!");
+    console.log(target, propertyName);
+}
+var Product = function () {
+    var _a;
+    var _title_decorators;
+    var _title_initializers = [];
+    var _title_extraInitializers = [];
+    return _a = /** @class */ (function () {
+            function Product(t, p) {
+                this.title = __runInitializers(this, _title_initializers, void 0);
+                this._price = __runInitializers(this, _title_extraInitializers);
+                this.title = t;
+                this._price = p;
+            }
+            Object.defineProperty(Product.prototype, "price", {
+                set: function (val) {
+                    if (val > 0) {
+                        this._price = val;
+                    }
+                    else {
+                        throw new Error("Invalid price - should be positive!");
+                    }
+                },
+                enumerable: false,
+                configurable: true
+            });
+            Product.prototype.getPriceWithTax = function (tax) {
+                return this._price * (1 + tax);
+            };
+            return Product;
+        }()),
+        (function () {
+            var _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+            _title_decorators = [Log];
+            __esDecorate(null, null, _title_decorators, { kind: "field", name: "title", static: false, private: false, access: { has: function (obj) { return "title" in obj; }, get: function (obj) { return obj.title; }, set: function (obj, value) { obj.title = value; } }, metadata: _metadata }, _title_initializers, _title_extraInitializers);
+            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        })(),
+        _a;
+}();
