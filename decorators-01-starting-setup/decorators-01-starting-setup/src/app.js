@@ -176,3 +176,41 @@ var Product = function () {
         })(),
         _a;
 }();
+var p1 = new Product("Book", 19.95);
+var p2 = new Product("Book 2", 29.95);
+function Autobind(_, _2, descriptor) {
+    var originalMethod = descriptor.value;
+    var adjDescriptor = {
+        configurable: true,
+        enumerable: false,
+        get: function () {
+            var boundFn = originalMethod.bind(this);
+            return boundFn;
+        },
+    };
+    return adjDescriptor;
+}
+var Printer = function () {
+    var _a;
+    var _instanceExtraInitializers = [];
+    var _showMessage_decorators;
+    return _a = /** @class */ (function () {
+            function Printer() {
+                this.message = (__runInitializers(this, _instanceExtraInitializers), "This works!");
+            }
+            Printer.prototype.showMessage = function () {
+                console.log(this.message);
+            };
+            return Printer;
+        }()),
+        (function () {
+            var _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+            _showMessage_decorators = [Autobind];
+            __esDecorate(_a, null, _showMessage_decorators, { kind: "method", name: "showMessage", static: false, private: false, access: { has: function (obj) { return "showMessage" in obj; }, get: function (obj) { return obj.showMessage; } }, metadata: _metadata }, null, _instanceExtraInitializers);
+            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        })(),
+        _a;
+}();
+var p = new Printer();
+var buttonEl = document.querySelector("button");
+buttonEl.addEventListener("click", p.showMessage);
