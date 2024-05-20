@@ -1,39 +1,62 @@
 import axios from "axios";
 
+declare const L: any;
+const ZOOM = 13;
+
 const form = document.querySelector("form")!;
-const addressInput = document.getElementById("address")! as HTMLInputElement;
+const addressInput = document.getElementById("address") as HTMLInputElement;
+const map = L.map("map");
 
-// type GeocodingResponse = {
-//     data: {
-//         lat: number;
-//         lon: number;
-//     };
-//     status: 200;
-// };
+// setting type for response
+type NominatimGeocodingResponse = {
+    features: {
+        geometry: {coordinates: {lat: Number; lng: Number}[]};
+        properties: {geocoding: {city: String; country: String; postcode: String}};
+    }[];
+    status: 200;
+};
 
-const searchAddressHandler = (e: Event) => {
-    e.preventDefault();
-
+function searchAddressHandler(event: Event) {
+    event.preventDefault();
     const enteredAddress = addressInput.value;
 
     axios
-        .get(`https://nominatim.openstreetmap.org/search?q=${encodeURI(enteredAddress)}&format=json`)
+        .get<NominatimGeocodingResponse>(
+            `https://nominatim.openstreetmap.org/?addressdetails=1&q=${encodeURI(
+                enteredAddress
+            )}&format=geocodejson&limit=1`
+        )
         .then((response) => {
-            if (response.status !== 200) {
-                throw new Error("Could not fetch location");
+            console.log(response);
+            if (!response.data.features.length) {
+                throw new Error("Could not fetch location!");
             }
-            // const data = response.data[0];
-            // const lat = data.lat;
-            // const long = data.lon;
 
-            // const coordinates = {lat: lat, long: long};
-            const coordinates = response.data[0].lat + " " + response.data[0].lon;
-            console.log(coordinates);
+            const coordinates = [
+                response.data.features[0].geometry.coordinates[1],
+                response.data.features[0].geometry.coordinates[0],
+            ];
+
+            const location = {
+                city: response.data.features[0].properties.geocoding.city,
+                country: response.data.features[0].properties.geocoding.country,
+                postcode: response.data.features[0].properties.geocoding.postcode,
+            };
+
+            map.setView(coordinates, ZOOM);
+
+            L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(map);
+
+            L.marker(coordinates)
+                .addTo(map)
+                .bindPopup(`${location.city}<br>${location.country}<br>${location.postcode}`)
+                .openPopup();
         })
         .catch((error) => {
-            alert(error.message);
             console.log(error);
         });
-};
+}
 
 form.addEventListener("submit", searchAddressHandler);

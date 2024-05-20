@@ -1,34 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = require("axios");
+var ZOOM = 13;
 var form = document.querySelector("form");
 var addressInput = document.getElementById("address");
-// type GeocodingResponse = {
-//     data: {
-//         lat: number;
-//         lon: number;
-//     };
-//     status: 200;
-// };
-var searchAddressHandler = function (e) {
-    e.preventDefault();
+var map = L.map("map");
+function searchAddressHandler(event) {
+    event.preventDefault();
     var enteredAddress = addressInput.value;
     axios_1.default
-        .get("https://nominatim.openstreetmap.org/search?q=".concat(encodeURI(enteredAddress), "&format=json"))
+        .get("https://nominatim.openstreetmap.org/?addressdetails=1&q=".concat(encodeURI(enteredAddress), "&format=geocodejson&limit=1"))
         .then(function (response) {
-        if (response.status !== 200) {
-            throw new Error("Could not fetch location");
+        console.log(response);
+        if (!response.data.features.length) {
+            throw new Error("Could not fetch location!");
         }
-        // const data = response.data[0];
-        // const lat = data.lat;
-        // const long = data.lon;
-        // const coordinates = {lat: lat, long: long};
-        var coordinates = response.data[0].lat + " " + response.data[0].lon;
-        console.log(coordinates);
+        var coordinates = [
+            response.data.features[0].geometry.coordinates[1],
+            response.data.features[0].geometry.coordinates[0],
+        ];
+        var location = {
+            city: response.data.features[0].properties.geocoding.city,
+            country: response.data.features[0].properties.geocoding.country,
+            postcode: response.data.features[0].properties.geocoding.postcode,
+        };
+        map.setView(coordinates, ZOOM);
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+        L.marker(coordinates)
+            .addTo(map)
+            .bindPopup("".concat(location.city, "<br>").concat(location.country, "<br>").concat(location.postcode))
+            .openPopup();
     })
         .catch(function (error) {
-        alert(error.message);
         console.log(error);
     });
-};
+}
 form.addEventListener("submit", searchAddressHandler);
