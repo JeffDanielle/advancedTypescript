@@ -19,6 +19,7 @@ function searchAddressHandler(event) {
             response.data.features[0].geometry.coordinates[1],
             response.data.features[0].geometry.coordinates[0],
         ];
+        console.log(coordinates);
         var location = {
             city: response.data.features[0].properties.geocoding.city,
             country: response.data.features[0].properties.geocoding.country,
