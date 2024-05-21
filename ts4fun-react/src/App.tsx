@@ -10,10 +10,16 @@ function App() {
     const todoAddHandler = (text: string) => {
         setTodos((prevTodos) => [...prevTodos, {id: Math.random().toString(), text}]);
     };
+
+    const todoDeleteHandler = (todoId: string) => {
+        setTodos((prevTodos) => {
+            return prevTodos.filter((todo) => todo.id !== todoId);
+        });
+    };
     return (
         <div className="App">
             <NewTodo onAddItem={todoAddHandler} />
-            <ToDoList items={todos} />
+            <ToDoList items={todos} onDelete={todoDeleteHandler} />
         </div>
     );
 }
