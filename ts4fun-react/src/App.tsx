@@ -7,9 +7,13 @@ function App() {
         {id: "t1", text: "Finish the course"},
         {id: "t2", text: "Learn React"},
     ];
+
+    const todoAddHandler = (text: string) => {
+        console.log(text);
+    };
     return (
         <div className="App">
-            <NewTodo />
+            <NewTodo onAddItem={todoAddHandler} />
             <ToDoList items={todos} />
         </div>
     );
